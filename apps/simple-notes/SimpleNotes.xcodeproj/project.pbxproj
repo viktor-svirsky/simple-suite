@@ -8,11 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		0964536B8E0DF18689543D8E /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A40E5B482C922D4D39C895 /* ThemeTests.swift */; };
+		1B2B48B44CC27B0F09817952 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15A4F88F00C1B2681E36647 /* SidebarView.swift */; };
 		2E3BDD8450A048601223FDEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18E13DC513DC94846F8578F2 /* Assets.xcassets */; };
+		3F4F917C913DC38CDD91D1C7 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3161D23867AAE9C033964760 /* NoteEditorView.swift */; };
+		689CBF86F5D7790641493CD3 /* RootViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3EFEF367F7035C7E4E2F22 /* RootViewTests.swift */; };
 		6B591488E761B09198C8661C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFCF1169CECD618FD1EACC6 /* Theme.swift */; };
 		723F3FF0B44113FA9CF8A63C /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */; };
+		7B038380546D7B8F77B6BF6C /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC6A5F0DBDAB902A565D04 /* NoteListView.swift */; };
 		7CB78E30DFBFED65F03D7011 /* SimpleNotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C182E07DDBF12873527C3F /* SimpleNotesApp.swift */; };
 		7F62042E27C19B72364B8626 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229FC6537480834C4B61AAD0 /* Note.swift */; };
+		8ACE2831C08F8DFD1B0725B4 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E92A902B76F320BA86EFE /* RootView.swift */; };
 		C1FC3F884B704A4F825E111F /* NoteModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,16 +32,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A7E92A902B76F320BA86EFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		16A40E5B482C922D4D39C895 /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		18E13DC513DC94846F8578F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CFCF1169CECD618FD1EACC6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		229FC6537480834C4B61AAD0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		3161D23867AAE9C033964760 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
+		5C3EFEF367F7035C7E4E2F22 /* RootViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewTests.swift; sourceTree = "<group>"; };
 		662F00B7E122E3718D452EBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModelTests.swift; sourceTree = "<group>"; };
+		B15A4F88F00C1B2681E36647 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		BE4AC3F6868B72325DEDE84D /* SimpleNotes.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C182E07DDBF12873527C3F /* SimpleNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNotesApp.swift; sourceTree = "<group>"; };
 		EA7748A0DCADC081A884AE77 /* SimpleNotesTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6BC6A5F0DBDAB902A565D04 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -47,6 +57,14 @@
 				662F00B7E122E3718D452EBD /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		299DB8BB267D40635F47B89B /* NoteList */ = {
+			isa = PBXGroup;
+			children = (
+				F6BC6A5F0DBDAB902A565D04 /* NoteListView.swift */,
+			);
+			path = NoteList;
 			sourceTree = "<group>";
 		};
 		305562F7E0A57FF03CBBB3A3 /* Models */ = {
@@ -65,6 +83,14 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		5A3BFC8D1524F44235D8880E /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				B15A4F88F00C1B2681E36647 /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
 		8282A2F3246EF683A19348CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +103,7 @@
 		83AA4F3C4AD93D79A393D570 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				0A7E92A902B76F320BA86EFE /* RootView.swift */,
 				E4C182E07DDBF12873527C3F /* SimpleNotesApp.swift */,
 			);
 			path = App;
@@ -91,10 +118,29 @@
 			);
 			sourceTree = "<group>";
 		};
+		C401E5DD5D4BA00271C95B96 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				3161D23867AAE9C033964760 /* NoteEditorView.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		CCF0DF38D4DDBBE77D8E6728 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				C401E5DD5D4BA00271C95B96 /* Editor */,
+				299DB8BB267D40635F47B89B /* NoteList */,
+				5A3BFC8D1524F44235D8880E /* Sidebar */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		CED5D359511B058F234AC7B6 /* SimpleNotesTests */ = {
 			isa = PBXGroup;
 			children = (
 				83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */,
+				5C3EFEF367F7035C7E4E2F22 /* RootViewTests.swift */,
 				BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */,
 				16A40E5B482C922D4D39C895 /* ThemeTests.swift */,
 			);
@@ -105,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				83AA4F3C4AD93D79A393D570 /* App */,
+				CCF0DF38D4DDBBE77D8E6728 /* Features */,
 				305562F7E0A57FF03CBBB3A3 /* Models */,
 				0F8B9EB47418CBF5C9C4385E /* Resources */,
 				37DD50747733845748327929 /* Theme */,
@@ -207,6 +254,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F62042E27C19B72364B8626 /* Note.swift in Sources */,
+				3F4F917C913DC38CDD91D1C7 /* NoteEditorView.swift in Sources */,
+				7B038380546D7B8F77B6BF6C /* NoteListView.swift in Sources */,
+				8ACE2831C08F8DFD1B0725B4 /* RootView.swift in Sources */,
+				1B2B48B44CC27B0F09817952 /* SidebarView.swift in Sources */,
 				7CB78E30DFBFED65F03D7011 /* SimpleNotesApp.swift in Sources */,
 				6B591488E761B09198C8661C /* Theme.swift in Sources */,
 			);
@@ -217,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1FC3F884B704A4F825E111F /* NoteModelTests.swift in Sources */,
+				689CBF86F5D7790641493CD3 /* RootViewTests.swift in Sources */,
 				723F3FF0B44113FA9CF8A63C /* SmokeTests.swift in Sources */,
 				0964536B8E0DF18689543D8E /* ThemeTests.swift in Sources */,
 			);

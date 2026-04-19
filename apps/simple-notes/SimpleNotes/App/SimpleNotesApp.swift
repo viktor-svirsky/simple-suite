@@ -5,7 +5,7 @@ import SwiftData
 struct SimpleNotesApp: App {
     var body: some Scene {
         WindowGroup {
-            Text("soon")
+            RootView()
         }
         .modelContainer(for: [Note.self])
     }
