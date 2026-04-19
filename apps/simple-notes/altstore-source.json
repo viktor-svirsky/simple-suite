@@ -1,0 +1,22 @@
+{
+  "name": "simple notes",
+  "identifier": "com.simplesuite.notes-source",
+  "subtitle": "Minimal markdown notes — iOS",
+  "sourceURL": "https://raw.githubusercontent.com/viktor-svirsky/simple-suite/main/apps/simple-notes/altstore-source.json",
+  "apps": [
+    {
+      "name": "simple notes",
+      "bundleIdentifier": "com.simplesuite.notes",
+      "developerName": "Viktor Svirsky",
+      "subtitle": "Minimal markdown notes app",
+      "category": "productivity",
+      "localizedDescription": "A minimal, beautiful markdown notes app. Folders, tags, image attachments, iCloud sync. First app in the simple suite.",
+      "iconURL": "https://raw.githubusercontent.com/viktor-svirsky/simple-suite/main/apps/simple-notes/SimpleNotes/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {}
+      },
+      "versions": []
+    }
+  ]
+}
