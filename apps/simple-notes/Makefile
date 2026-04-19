@@ -2,7 +2,7 @@ APP_NAME = SimpleNotes
 SCHEME = SimpleNotes
 PROJECT = $(APP_NAME).xcodeproj
 VERSION ?= $(shell cat VERSION 2>/dev/null || echo 0.0.0-dev)
-DEST_TEST ?= platform=iOS Simulator,name=iPhone 16
+DEST_TEST ?= platform=iOS Simulator,name=iPhone 16 Pro
 
 .PHONY: generate test build ipa clean
 

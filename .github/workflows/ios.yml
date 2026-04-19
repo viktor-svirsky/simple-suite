@@ -45,7 +45,7 @@ jobs:
           xcodebuild \
             -project apps/simple-notes/SimpleNotes.xcodeproj \
             -scheme SimpleNotes \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
             test \
             CODE_SIGNING_ALLOWED=NO \
             -resultBundlePath TestResults.xcresult
