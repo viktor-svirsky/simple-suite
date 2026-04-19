@@ -38,6 +38,7 @@ fastlane/test_output
 .envrc
 secrets/
 
-# Claude / editor
+# Claude / editor / automation
 .claude/
 .idea/
+.ralphex/
