@@ -1,73 +1,51 @@
 import SwiftUI
+import SwiftData
 
 struct NoteEditorView: View {
-    // Mock until M1 wires @Bindable note.
-    let title: String = "On slow mornings"
-    let meta: String = "Today · 9:12  ·  Journal"
-    let tag: String = "#journal"
-    let paragraphs: [String] = [
-        "Coffee, a book, and the window half open. The trick is not to check the phone before the kettle sings.",
-        "Some mornings the rules fall apart. That is also fine. The point is the cadence, not the streak.",
-    ]
+    @Bindable var note: Note
+    @Environment(\.modelContext) private var modelContext
+
+    @State private var autosaver = EditorAutosaver()
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text(title)
-                    .font(Theme.Font.serif(28, weight: .medium))
-                    .foregroundStyle(Theme.Color.text)
-                HStack(spacing: 8) {
-                    Text(meta)
-                        .font(Theme.Font.sans(12))
-                        .foregroundStyle(Theme.Color.muted)
-                    Text(tag)
-                        .font(Theme.Font.mono(12))
-                        .foregroundStyle(Theme.Color.muted)
-                }
-
-                Text("Rules")
-                    .font(Theme.Font.serif(20, weight: .medium))
-                    .padding(.top, 8)
-                VStack(alignment: .leading, spacing: 4) {
-                    bullet("No screens before water boils")
-                    bullet("Read twenty pages, no more")
-                    bullet("Write one sentence about the day")
-                }
-
-                ForEach(paragraphs, id: \.self) { p in
-                    Text(p)
-                        .font(Theme.Font.serif(17))
-                        .foregroundStyle(Theme.Color.text)
-                        .lineSpacing(6)
-                }
-            }
+        TextEditor(text: $note.body)
+            .font(Theme.Font.serif(17))
+            .lineSpacing(6)
+            .scrollContentBackground(.hidden)
+            .background(Theme.Color.bg)
             .padding(.horizontal, Theme.Metric.padding)
-            .padding(.vertical, 24)
-        }
-        .background(Theme.Color.bg)
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button { } label: { Image(systemName: "pin") }
-                Button { } label: { Image(systemName: "ellipsis.circle") }
+            .padding(.vertical, 8)
+            .navigationTitle(note.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: note.body) { _, _ in
+                autosaver.scheduleTouch(on: note)
             }
-        }
-    }
-
-    private func bullet(_ text: String) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text("·")
-                .font(Theme.Font.serif(17))
-                .foregroundStyle(Theme.Color.muted)
-            Text(text)
-                .font(Theme.Font.serif(17))
-                .foregroundStyle(Theme.Color.text)
-        }
+            .onDisappear {
+                autosaver.cancel()
+                note.touch()
+                try? modelContext.save()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        note.isPinned.toggle()
+                        note.touch()
+                    } label: {
+                        Image(systemName: note.isPinned ? "pin.fill" : "pin")
+                    }
+                    .accessibilityLabel(note.isPinned ? "Unpin" : "Pin")
+                }
+            }
     }
 }
 
-#Preview { NavigationStack { NoteEditorView() } }
-
-extension NoteEditorView {
-    // Temporary shim — replaced with @Bindable note in Task 8.
-    init(note: Note) { self.init() }
+#Preview {
+    let container = try! ModelContainer(
+        for: Note.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+    let note = Note(body: "Hello\nBody here.")
+    container.mainContext.insert(note)
+    return NavigationStack { NoteEditorView(note: note) }
+        .modelContainer(container)
 }
