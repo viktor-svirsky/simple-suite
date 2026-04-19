@@ -43,4 +43,33 @@ final class NoteModelTests: XCTestCase {
         XCTAssertEqual(note.createdAt, created)
         XCTAssertEqual(note.updatedAt, later)
     }
+
+    func test_title_derivedFromFirstNonEmptyLine() {
+        let n = Note(body: "  \n\nHello world\nsecond line\n")
+        XCTAssertEqual(n.title, "Hello world")
+    }
+
+    func test_title_trimmedAndTruncatedTo80Chars() {
+        let long = String(repeating: "a", count: 120)
+        let n = Note(body: "   \(long)   ")
+        XCTAssertEqual(n.title.count, 80)
+        XCTAssertEqual(n.title, String(repeating: "a", count: 80))
+    }
+
+    func test_title_emptyBodyYieldsNewNoteLabel() {
+        let n = Note(body: "")
+        XCTAssertEqual(n.title, "New Note")
+        let n2 = Note(body: "   \n\n")
+        XCTAssertEqual(n2.title, "New Note")
+    }
+
+    func test_preview_skipsFirstLineAndTrims() {
+        let n = Note(body: "Headline\nBody first sentence. Body second sentence.")
+        XCTAssertEqual(n.preview, "Body first sentence. Body second sentence.")
+    }
+
+    func test_preview_emptyBodyIsEmpty() {
+        XCTAssertEqual(Note(body: "Only headline").preview, "")
+        XCTAssertEqual(Note(body: "").preview, "")
+    }
 }
