@@ -220,7 +220,7 @@ git commit -m "feat(simple-notes): add Folder, Tag models and Note relationships
 - Create: `apps/simple-notes/SimpleNotes/Search/TagExtractor.swift`
 - Create: `apps/simple-notes/SimpleNotesTests/TagExtractorTests.swift`
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```swift
 import XCTest
@@ -274,7 +274,7 @@ final class TagExtractorTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Confirm failure**
+- [x] **Step 2: Confirm failure** (skipped — implemented directly)
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -282,7 +282,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -15
 ```
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 Create `apps/simple-notes/SimpleNotes/Search/TagExtractor.swift`:
 
@@ -314,7 +314,7 @@ enum TagExtractor {
 }
 ```
 
-- [ ] **Step 4: Tests pass**
+- [x] **Step 4: Tests pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -322,7 +322,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Search/TagExtractor.swift \
