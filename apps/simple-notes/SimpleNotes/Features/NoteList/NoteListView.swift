@@ -37,6 +37,25 @@ struct NoteListView: View {
                                 isPinned: note.isPinned
                             )
                         }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button {
+                                NoteActions.togglePin(note)
+                            } label: {
+                                Label(
+                                    note.isPinned ? "Unpin" : "Pin",
+                                    systemImage: note.isPinned ? "pin.slash" : "pin"
+                                )
+                            }
+                            .tint(Theme.Color.muted)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                if selection == note.id { selection = nil }
+                                NoteActions.delete(note, in: modelContext)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
                 .listStyle(.plain)
