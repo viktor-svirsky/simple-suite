@@ -26,8 +26,7 @@ targets:
       path: SimpleNotes/Resources/Info.plist
       properties:
         UILaunchScreen:
-          UIColorName: ""
-          UIImageName: ""
+          UIColorName: LaunchBg
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UISupportedInterfaceOrientations~ipad:
