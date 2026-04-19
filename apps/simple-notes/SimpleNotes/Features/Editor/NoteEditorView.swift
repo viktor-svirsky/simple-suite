@@ -66,3 +66,8 @@ struct NoteEditorView: View {
 }
 
 #Preview { NavigationStack { NoteEditorView() } }
+
+extension NoteEditorView {
+    // Temporary shim — replaced with @Bindable note in Task 8.
+    init(note: Note) { self.init() }
+}

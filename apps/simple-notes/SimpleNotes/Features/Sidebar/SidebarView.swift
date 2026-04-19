@@ -86,3 +86,8 @@ struct SidebarView: View {
 }
 
 #Preview { NavigationStack { SidebarView() } }
+
+extension SidebarView {
+    // Temporary shim — replaced with real selection binding in Task 6.
+    init(selectedScope: Binding<NoteListScope>) { self.init() }
+}
