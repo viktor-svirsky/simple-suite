@@ -32,6 +32,11 @@ struct NoteEditorView: View {
         }
         .navigationTitle(note.title)
         .navigationBarTitleDisplayMode(.inline)
+        .task(id: note.id) {
+            autosaver.onFlush {
+                TagExtractor.apply(to: note, in: modelContext)
+            }
+        }
         .onDisappear(perform: flush)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -84,6 +89,7 @@ struct NoteEditorView: View {
     private func flush() {
         autosaver.cancel()
         note.touch()
+        TagExtractor.apply(to: note, in: modelContext)
         try? modelContext.save()
     }
 }

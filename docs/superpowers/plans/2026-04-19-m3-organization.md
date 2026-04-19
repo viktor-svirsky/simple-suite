@@ -339,7 +339,7 @@ git commit -m "feat(simple-notes): add TagExtractor (upsert from body)"
 - Modify: `apps/simple-notes/SimpleNotes/Features/Editor/EditorAutosaver.swift`
 - Modify: `apps/simple-notes/SimpleNotes/Features/Editor/NoteEditorView.swift`
 
-- [ ] **Step 1: Extend autosaver with an `onFlush` callback**
+- [x] **Step 1: Extend autosaver with an `onFlush` callback**
 
 ```swift
 @MainActor
@@ -367,7 +367,7 @@ final class EditorAutosaver {
 }
 ```
 
-- [ ] **Step 2: Wire editor**
+- [x] **Step 2: Wire editor**
 
 In `NoteEditorView.body`, after creating `autosaver`:
 
@@ -381,7 +381,7 @@ In `NoteEditorView.body`, after creating `autosaver`:
 
 Also call `TagExtractor.apply(to: note, in: modelContext)` in the view's `flush()` helper before `modelContext.save()`.
 
-- [ ] **Step 3: Test existing tests still pass**
+- [x] **Step 3: Test existing tests still pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -389,7 +389,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Features/Editor \
