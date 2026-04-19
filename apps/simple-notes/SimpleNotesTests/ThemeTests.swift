@@ -11,6 +11,7 @@ final class ThemeTests: XCTestCase {
 
     func test_fontNames_areDefined() {
         XCTAssertEqual(Theme.Font.serifName, "New York")
+        XCTAssertEqual(Theme.Font.sansName, "SF Pro Text")
         XCTAssertEqual(Theme.Font.monoName, "SF Mono")
     }
 }

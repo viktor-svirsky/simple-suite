@@ -18,6 +18,9 @@ xcuserdata/
 *.perspectivev3
 !default.perspectivev3
 
+# XcodeGen-managed Xcode projects (regenerate with `xcodegen generate`)
+*.xcodeproj
+
 # Swift Package Manager
 .build/
 Packages/

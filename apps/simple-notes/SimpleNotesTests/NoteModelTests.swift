@@ -31,4 +31,16 @@ final class NoteModelTests: XCTestCase {
         XCTAssertLessThanOrEqual(note.createdAt, after)
         XCTAssertEqual(note.createdAt, note.updatedAt)
     }
+
+    func test_touch_updatesUpdatedAtWithoutChangingCreatedAt() throws {
+        let created = Date(timeIntervalSince1970: 1_000_000)
+        let note = Note(body: "x", createdAt: created)
+        XCTAssertEqual(note.updatedAt, created)
+
+        let later = Date(timeIntervalSince1970: 1_000_100)
+        note.touch(later)
+
+        XCTAssertEqual(note.createdAt, created)
+        XCTAssertEqual(note.updatedAt, later)
+    }
 }

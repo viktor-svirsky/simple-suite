@@ -21,4 +21,8 @@ final class Note {
         self.updatedAt = createdAt
         self.isPinned = isPinned
     }
+
+    func touch(_ now: Date = Date()) {
+        updatedAt = now
+    }
 }
