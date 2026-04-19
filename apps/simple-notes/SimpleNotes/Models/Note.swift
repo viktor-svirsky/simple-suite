@@ -46,12 +46,12 @@ final class Note {
         return String(firstLine.prefix(80))
     }
 
-    /// Body after the title line, trimmed. Empty when body is one line or blank.
+    /// Body after the title line, stripped of markdown syntax, trimmed.
+    /// Empty when body is one line or blank.
     var preview: String {
         let lines = body.split(whereSeparator: \.isNewline).map(String.init)
         guard lines.count > 1 else { return "" }
-        return lines.dropFirst()
-            .joined(separator: " ")
-            .trimmingCharacters(in: .whitespaces)
+        let joined = lines.dropFirst().joined(separator: " ")
+        return MarkdownPlainText.strip(joined).trimmingCharacters(in: .whitespaces)
     }
 }
