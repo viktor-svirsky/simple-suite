@@ -12,6 +12,8 @@
 		6B591488E761B09198C8661C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFCF1169CECD618FD1EACC6 /* Theme.swift */; };
 		723F3FF0B44113FA9CF8A63C /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */; };
 		7CB78E30DFBFED65F03D7011 /* SimpleNotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C182E07DDBF12873527C3F /* SimpleNotesApp.swift */; };
+		7F62042E27C19B72364B8626 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229FC6537480834C4B61AAD0 /* Note.swift */; };
+		C1FC3F884B704A4F825E111F /* NoteModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +30,9 @@
 		16A40E5B482C922D4D39C895 /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		18E13DC513DC94846F8578F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CFCF1169CECD618FD1EACC6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		229FC6537480834C4B61AAD0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		662F00B7E122E3718D452EBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModelTests.swift; sourceTree = "<group>"; };
 		BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		BE4AC3F6868B72325DEDE84D /* SimpleNotes.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C182E07DDBF12873527C3F /* SimpleNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNotesApp.swift; sourceTree = "<group>"; };
@@ -43,6 +47,14 @@
 				662F00B7E122E3718D452EBD /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		305562F7E0A57FF03CBBB3A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				229FC6537480834C4B61AAD0 /* Note.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		37DD50747733845748327929 /* Theme */ = {
@@ -82,6 +94,7 @@
 		CED5D359511B058F234AC7B6 /* SimpleNotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				83D4185CC633B1FAC850CE8E /* NoteModelTests.swift */,
 				BD171FFDDD5FD610EA1B9E1C /* SmokeTests.swift */,
 				16A40E5B482C922D4D39C895 /* ThemeTests.swift */,
 			);
@@ -92,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				83AA4F3C4AD93D79A393D570 /* App */,
+				305562F7E0A57FF03CBBB3A3 /* Models */,
 				0F8B9EB47418CBF5C9C4385E /* Resources */,
 				37DD50747733845748327929 /* Theme */,
 			);
@@ -192,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F62042E27C19B72364B8626 /* Note.swift in Sources */,
 				7CB78E30DFBFED65F03D7011 /* SimpleNotesApp.swift in Sources */,
 				6B591488E761B09198C8661C /* Theme.swift in Sources */,
 			);
@@ -201,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1FC3F884B704A4F825E111F /* NoteModelTests.swift in Sources */,
 				723F3FF0B44113FA9CF8A63C /* SmokeTests.swift in Sources */,
 				0964536B8E0DF18689543D8E /* ThemeTests.swift in Sources */,
 			);
