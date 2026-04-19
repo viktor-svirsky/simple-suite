@@ -1,7 +1,7 @@
 {
   "name": "simple notes",
   "identifier": "com.simplesuite.notes-source",
-  "subtitle": "Minimal markdown notes — iOS",
+  "subtitle": "Minimal markdown notes \u2014 iOS",
   "sourceURL": "https://raw.githubusercontent.com/viktor-svirsky/simple-suite/main/apps/simple-notes/altstore-source.json",
   "apps": [
     {
@@ -16,7 +16,15 @@
         "entitlements": [],
         "privacy": {}
       },
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1",
+          "date": "2026-04-19",
+          "downloadURL": "https://github.com/viktor-svirsky/simple-suite/releases/download/simple-notes-v0.1.1/SimpleNotes.ipa",
+          "size": 898237,
+          "localizedDescription": "Update to v0.1.1"
+        }
+      ]
     }
   ]
 }
