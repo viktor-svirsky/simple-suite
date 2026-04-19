@@ -3,6 +3,7 @@ SCHEME = SimpleNotes
 PROJECT = $(APP_NAME).xcodeproj
 VERSION ?= $(shell cat VERSION 2>/dev/null || echo 0.0.0-dev)
 DEST_TEST ?= platform=iOS Simulator,name=iPhone 16 Pro
+SENTRY_DSN ?=
 
 .PHONY: generate test build ipa clean
 
@@ -36,7 +37,8 @@ ipa: generate
 		CODE_SIGN_IDENTITY=- \
 		CODE_SIGNING_ALLOWED=NO \
 		MARKETING_VERSION=$(VERSION) \
-		CURRENT_PROJECT_VERSION=$(VERSION)
+		CURRENT_PROJECT_VERSION=$(VERSION) \
+		SENTRY_DSN="$(SENTRY_DSN)"
 	mkdir -p /tmp/$(APP_NAME)IPA/Payload
 	cp -r /tmp/$(APP_NAME).xcarchive/Products/Applications/$(APP_NAME).app \
 		/tmp/$(APP_NAME)IPA/Payload/

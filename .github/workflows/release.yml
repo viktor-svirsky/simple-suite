@@ -111,8 +111,10 @@ jobs:
       - name: Build IPA
         if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
         working-directory: ${{ env.APP_DIR }}
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          make ipa VERSION=${{ env.VERSION }}
+          make ipa VERSION=${{ env.VERSION }} SENTRY_DSN="$SENTRY_DSN"
           cp /tmp/SimpleNotes.ipa "$GITHUB_WORKSPACE/SimpleNotes.ipa"
 
       - name: Create tag
@@ -132,6 +134,31 @@ jobs:
 
       # Re-verify the published artifact by downloading it and checking the zip
       # header — catches CDN/upload corruption before AltStore points at it.
+      # Associate this release with the Sentry project so issues surface "introduced in vX"
+      # and unresolved errors tagged to prior releases auto-resolve when fixed. Also uploads
+      # the dSYM so Sentry can symbolicate crashes from the sideloaded IPA. Skips silently
+      # if SENTRY_AUTH_TOKEN isn't configured — can't reference secrets in `if:` directly,
+      # so we gate in the shell.
+      - name: Sentry release + dSYM
+        if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: viktor-svirskyi
+          SENTRY_PROJECT: simple-notes
+        run: |
+          if [ -z "$SENTRY_AUTH_TOKEN" ]; then
+            echo "::notice::SENTRY_AUTH_TOKEN not set — skipping Sentry release association"
+            exit 0
+          fi
+          curl -sL https://sentry.io/get-cli/ | sh
+          RELEASE="simple-notes@${{ env.VERSION }}"
+          sentry-cli releases new "$RELEASE"
+          sentry-cli releases set-commits --auto "$RELEASE" || true
+          sentry-cli debug-files upload \
+            --include-sources \
+            /tmp/SimpleNotes.xcarchive/dSYMs || true
+          sentry-cli releases finalize "$RELEASE"
+
       - name: Verify published bundle
         if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
         env:
@@ -141,12 +168,13 @@ jobs:
           gh release download "${{ env.TAG }}" -D /tmp/release-verify -p SimpleNotes.ipa --clobber
           unzip -t /tmp/release-verify/SimpleNotes.ipa > /dev/null
 
-      - name: Create post-release PR
+      # Private repo on the free plan has no branch protection, so push the
+      # VERSION/altstore bump straight to main instead of opening a PR (which
+      # would require the repo-level "Allow Actions to create PRs" toggle).
+      - name: Push post-release bump to main
         if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          INPUT_VERSION: ${{ inputs.version }}
         run: |
           IPA_SIZE=$(stat -f%z SimpleNotes.ipa)
           DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG }}/SimpleNotes.ipa"
@@ -176,36 +204,14 @@ jobs:
 
           echo "${{ env.VERSION }}" > "$APP_DIR/VERSION"
 
-          BRANCH="chore/release-simple-notes-v${{ env.VERSION }}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$BRANCH"
           git add "$APP_DIR/VERSION" "$APP_DIR/altstore-source.json"
-          git commit -m "chore: release simple-notes v${{ env.VERSION }} — bump VERSION + update AltStore"
-          git push origin "$BRANCH" --force
-          SOURCE_LABEL="${PR_TITLE:-$INPUT_VERSION}"
-          PR_BODY=$(printf 'Auto-generated from merged PR: **%s**\n\n- [x] GitHub Release created: %s\n- [x] AltStore source updated\n- [x] Auto-merge enabled' \
-            "$SOURCE_LABEL" "${{ env.TAG }}")
-          PR_URL=$(gh pr create \
-            --title "chore: release simple-notes v${{ env.VERSION }}" \
-            --body "$PR_BODY" \
-            --base main --head "$BRANCH")
-
-          # Report check runs so branch protection is satisfied — tests already ran here.
-          PR_SHA=$(git rev-parse HEAD)
-          for CHECK_NAME in simple-notes-build simple-notes-test; do
-            gh api "repos/${{ github.repository }}/check-runs" -X POST \
-              -f name="$CHECK_NAME" \
-              -f head_sha="$PR_SHA" \
-              -f status="completed" \
-              -f conclusion="success" \
-              -f "output[title]=Passed (from release workflow)" \
-              -f "output[summary]=Tests passed during release v${{ env.VERSION }} build."
-          done
-
-          STATE=$(gh pr view "$PR_URL" --json mergeStateStatus --jq .mergeStateStatus)
-          if [ "$STATE" = "CLEAN" ]; then
-            gh pr merge "$PR_URL" --squash --delete-branch
-          else
-            gh pr merge "$PR_URL" --squash --auto --delete-branch
+          if git diff --cached --quiet; then
+            echo "No VERSION/altstore changes to push."
+            exit 0
           fi
+          git commit -m "chore: release simple-notes v${{ env.VERSION }} — bump VERSION + update AltStore"
+          # Rebase onto the latest main in case the release raced another push.
+          git pull --rebase origin main
+          git push origin HEAD:main
