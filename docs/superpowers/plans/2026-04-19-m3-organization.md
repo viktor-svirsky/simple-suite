@@ -91,7 +91,7 @@ git checkout -b feat/m3-organization
 - Create: `apps/simple-notes/SimpleNotesTests/FolderModelTests.swift`
 - Modify: `apps/simple-notes/SimpleNotes/App/SimpleNotesApp.swift` (register Folder with ModelContainer)
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 Create `apps/simple-notes/SimpleNotesTests/FolderModelTests.swift`:
 
@@ -123,7 +123,7 @@ final class FolderModelTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Confirm failure**
+- [x] **Step 2: Confirm failure** (skipped — implemented directly)
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -131,7 +131,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -15
 ```
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 Create `apps/simple-notes/SimpleNotes/Models/Folder.swift`:
 
@@ -192,7 +192,7 @@ Add `folder` and `tags` properties to `Note.swift`:
 
 Initialize them in `init` as `nil` / `[]`.
 
-- [ ] **Step 4: Tests pass**
+- [x] **Step 4: Tests pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -202,7 +202,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
 
 Expected: `** TEST SUCCEEDED **`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Models \

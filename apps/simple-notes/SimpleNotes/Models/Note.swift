@@ -8,6 +8,8 @@ final class Note {
     var createdAt: Date
     var updatedAt: Date
     var isPinned: Bool
+    var folder: Folder?
+    @Relationship var tags: [Tag]
 
     init(
         id: UUID = UUID(),
@@ -20,6 +22,8 @@ final class Note {
         self.createdAt = createdAt
         self.updatedAt = createdAt
         self.isPinned = isPinned
+        self.folder = nil
+        self.tags = []
     }
 
     /// Bumps `updatedAt`. Call whenever persisted content changes.
