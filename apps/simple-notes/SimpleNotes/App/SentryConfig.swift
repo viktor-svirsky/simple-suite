@@ -20,6 +20,11 @@ enum SentryConfig {
             options.tracesSampleRate = 0.1
             options.attachScreenshot = false
             options.attachViewHierarchy = false
+            options.beforeSend = { event in
+                event.tags = (event.tags ?? [:])
+                    .merging(["cloudkit": Self.cloudKitEnabled ? "1" : "0"], uniquingKeysWith: { a, _ in a })
+                return event
+            }
         }
     }
 
@@ -33,6 +38,14 @@ enum SentryConfig {
         return "development"
         #else
         return "production"
+        #endif
+    }
+
+    static var cloudKitEnabled: Bool {
+        #if SIMPLE_NOTES_CLOUDKIT_ENABLED
+        return true
+        #else
+        return false
         #endif
     }
 }
