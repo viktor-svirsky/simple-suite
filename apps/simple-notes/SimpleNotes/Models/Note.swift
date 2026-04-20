@@ -10,6 +10,7 @@ final class Note {
     var isPinned: Bool
     var folder: Folder?
     @Relationship var tags: [Tag]
+    @Relationship(deleteRule: .cascade) var attachments: [Attachment]
 
     init(
         id: UUID = UUID(),
@@ -24,6 +25,7 @@ final class Note {
         self.isPinned = isPinned
         self.folder = nil
         self.tags = []
+        self.attachments = []
     }
 
     /// Bumps `updatedAt`. Call whenever persisted content changes.

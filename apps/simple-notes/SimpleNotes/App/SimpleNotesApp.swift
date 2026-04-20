@@ -14,6 +14,6 @@ struct SimpleNotesApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [Note.self, Folder.self, Tag.self])
+        .modelContainer(for: [Note.self, Folder.self, Tag.self, Attachment.self])
     }
 }

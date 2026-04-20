@@ -88,7 +88,7 @@ git checkout -b feat/m4-attachments
 
 `Attachment` stores `mimeType: String` (e.g. `"image/jpeg"`, `"application/pdf"`, `"application/octet-stream"`) so the renderer can pick image vs PDF vs generic-chip rendering without sniffing data on every access.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```swift
 import XCTest
@@ -125,7 +125,7 @@ final class AttachmentModelTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Confirm failure → implement**
+- [x] **Step 2: Confirm failure → implement**
 
 ```swift
 import Foundation
@@ -158,7 +158,7 @@ final class Attachment {
 }
 ```
 
-- [ ] **Step 3: Register + tests pass**
+- [x] **Step 3: Register + tests pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -166,7 +166,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Models/Attachment.swift \
