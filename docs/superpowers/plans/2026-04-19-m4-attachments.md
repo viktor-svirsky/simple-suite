@@ -186,7 +186,7 @@ git commit -m "feat(simple-notes): add Attachment model with cascade delete"
 - Create: `apps/simple-notes/SimpleNotes/Attachments/AttachmentCompressor.swift`
 - Create: `apps/simple-notes/SimpleNotesTests/AttachmentCompressorTests.swift`
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```swift
 import XCTest
@@ -247,7 +247,7 @@ final class AttachmentCompressorTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Implement compressor**
+- [x] **Step 2: Implement compressor**
 
 `apps/simple-notes/SimpleNotes/Attachments/AttachmentError.swift`:
 
@@ -293,7 +293,7 @@ enum AttachmentCompressor {
 }
 ```
 
-- [ ] **Step 3: Tests pass**
+- [x] **Step 3: Tests pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -301,7 +301,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Attachments \
