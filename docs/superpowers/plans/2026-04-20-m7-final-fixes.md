@@ -44,7 +44,7 @@
 - Modify: `apps/simple-notes/SimpleNotes/Models/Note.swift`
 - Modify: `apps/simple-notes/SimpleNotesTests/AttachmentModelTests.swift` (add inverse assertion)
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```swift
     func test_attachment_knowsItsNote() throws {
@@ -58,7 +58,7 @@
     }
 ```
 
-- [ ] **Step 2: Implement**
+- [x] **Step 2: Implement**
 
 `Attachment.swift`:
 
@@ -79,7 +79,7 @@ Also add external storage attribute:
     @Attribute(.externalStorage) var data: Data
 ```
 
-- [ ] **Step 3: Regen + test pass**
+- [x] **Step 3: Regen + test pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -87,7 +87,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Models \

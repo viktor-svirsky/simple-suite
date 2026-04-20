@@ -10,7 +10,8 @@ final class Note {
     var isPinned: Bool
     var folder: Folder?
     @Relationship var tags: [Tag]
-    @Relationship(deleteRule: .cascade) var attachments: [Attachment]
+    @Relationship(deleteRule: .cascade, inverse: \Attachment.note)
+    var attachments: [Attachment]
 
     init(
         id: UUID = UUID(),

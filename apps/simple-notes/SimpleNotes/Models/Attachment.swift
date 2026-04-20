@@ -6,8 +6,9 @@ final class Attachment {
     var id: UUID
     var filename: String
     var mimeType: String
-    var data: Data
+    @Attribute(.externalStorage) var data: Data
     var createdAt: Date
+    var note: Note?
 
     init(
         id: UUID = UUID(),

@@ -24,6 +24,16 @@ final class AttachmentModelTests: XCTestCase {
         XCTAssertEqual(try c.fetchCount(FetchDescriptor<Attachment>()), 0)
     }
 
+    func test_attachment_knowsItsNote() throws {
+        let c = try ctx()
+        let note = Note(body: "")
+        let att = Attachment(filename: "x", data: Data())
+        note.attachments = [att]
+        c.insert(note)
+        try c.save()
+        XCTAssertEqual(att.note?.body, "")
+    }
+
     func test_attachmentCreatedAt_defaultsToNow() {
         let before = Date()
         let att = Attachment(filename: "x.jpg", data: Data())
