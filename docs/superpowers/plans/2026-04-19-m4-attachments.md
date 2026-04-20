@@ -318,7 +318,7 @@ git commit -m "feat(simple-notes): add AttachmentCompressor (2048px, JPEG 0.8, 5
 - Modify: `apps/simple-notes/SimpleNotes/Features/Editor/NoteEditorView.swift`
 - Create: `apps/simple-notes/SimpleNotes/Features/Editor/AttachmentChipRow.swift`
 
-- [ ] **Step 1: PhotosPicker binding**
+- [x] **Step 1: PhotosPicker binding**
 
 Add to `NoteEditorView`:
 
@@ -376,7 +376,7 @@ Toolbar button:
 
 Show `errorBanner` as a `.safeAreaInset(edge: .top)` banner, auto-dismiss after 3 s.
 
-- [ ] **Step 2: Chip row**
+- [x] **Step 2: Chip row**
 
 ```swift
 struct AttachmentChipRow: View {
@@ -418,7 +418,7 @@ struct AttachmentChipRow: View {
 
 Include chip row in `NoteEditorView` above the editor when `!note.attachments.isEmpty`.
 
-- [ ] **Step 3: Build passes**
+- [x] **Step 3: Build passes**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -426,7 +426,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Features/Editor \
