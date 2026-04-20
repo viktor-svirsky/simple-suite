@@ -289,7 +289,7 @@ git commit -m "refactor(simple-notes): extract NoteAttachments helper"
 **Files:**
 - Modify: `.github/workflows/release.yml`
 
-- [ ] **Step 1: Reorder**
+- [x] **Step 1: Reorder**
 
 Move the `Create tag` step to **after** `Verify published bundle`. Keep `Create GitHub Release` first (it doesn't create the tag if `tag_name` doesn't exist yet — `softprops/action-gh-release@v2` creates it from `tag_name` automatically; re-check current behaviour and adjust: if the action creates the tag, move the `Create tag` block deletion and let the action do it after verify).
 
@@ -303,7 +303,7 @@ Simpler safer path: keep current order but add a cleanup on failure that deletes
           gh release delete "${{ env.TAG }}" --yes || true
 ```
 
-- [ ] **Step 2: Lint + commit**
+- [x] **Step 2: Lint + commit**
 
 ```bash
 actionlint .github/workflows/*.yml

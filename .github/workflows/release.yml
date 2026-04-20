@@ -185,6 +185,14 @@ jobs:
           unzip -t /tmp/release-verify/SimpleNotes.ipa > /dev/null
           unzip -t /tmp/release-verify/SimpleNotesCloudKit.ipa > /dev/null
 
+      - name: Rollback tag on verification failure
+        if: failure() && steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin ":refs/tags/${{ env.TAG }}" || true
+          gh release delete "${{ env.TAG }}" --yes || true
+
       # Private repo on the free plan has no branch protection, so push the
       # VERSION/altstore bump straight to main instead of opening a PR (which
       # would require the repo-level "Allow Actions to create PRs" toggle).
