@@ -318,13 +318,13 @@ git commit -m "fix(ci): roll back tag + release if bundle verification fails"
 **Files:**
 - Modify: `apps/simple-notes/SimpleNotes/App/SentryConfig.swift`
 
-- [ ] **Step 1: Drop from 0.1 → 0.01**
+- [x] **Step 1: Drop from 0.1 → 0.01**
 
 ```swift
             options.tracesSampleRate = 0.01
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/App/SentryConfig.swift \

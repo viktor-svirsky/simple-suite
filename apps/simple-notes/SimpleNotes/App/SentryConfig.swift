@@ -17,7 +17,7 @@ enum SentryConfig {
             options.dsn = dsn
             options.environment = environment
             options.releaseName = release
-            options.tracesSampleRate = 0.1
+            options.tracesSampleRate = 0.01
             options.attachScreenshot = false
             options.attachViewHierarchy = false
             options.beforeSend = { event in
