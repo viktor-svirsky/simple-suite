@@ -105,7 +105,7 @@ git commit -m "fix(simple-notes): Attachment inverse + externalStorage for Cloud
 - Create: `apps/simple-notes/SimpleNotes/Resources/SimpleNotes.Release.entitlements`
 - Modify: `apps/simple-notes/project.yml`
 
-- [ ] **Step 1: Create Release entitlements (no iCloud keys)**
+- [x] **Step 1: Create Release entitlements (no iCloud keys)**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -116,7 +116,7 @@ git commit -m "fix(simple-notes): Attachment inverse + externalStorage for Cloud
 </plist>
 ```
 
-- [ ] **Step 2: Update project.yml**
+- [x] **Step 2: Update project.yml**
 
 Under `targets.SimpleNotes.settings.configs`:
 
@@ -131,7 +131,7 @@ Under `targets.SimpleNotes.settings.configs`:
 
 Remove the global `CODE_SIGN_ENTITLEMENTS` from the base settings.
 
-- [ ] **Step 3: Regen + build both configs**
+- [x] **Step 3: Regen + build both configs**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -145,7 +145,7 @@ xcodebuild -project apps/simple-notes/SimpleNotes.xcodeproj -scheme SimpleNotes 
 
 Both should succeed.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Resources \
