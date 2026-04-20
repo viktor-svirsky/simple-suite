@@ -33,7 +33,7 @@
 
 ## Task 1: Branch
 
-- [ ] Pull main, branch `feat/m7-final-fixes`.
+- [x] Pull main, branch `feat/m7-final-fixes`.
 
 ---
 
