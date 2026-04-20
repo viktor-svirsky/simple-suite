@@ -695,16 +695,16 @@ git commit -m "feat(simple-notes): render inline attachment images"
 
 ## Task 6: E2E + manual smoke
 
-- [ ] Full `make clean test` pass.
-- [ ] Manual checklist (mark skipped):
+- [x] Full `make clean test` pass. (65 tests, 0 failures on iPhone 17 sim)
+- [x] Manual checklist (skipped - not automatable in simulator harness):
   - Toolbar photo button opens PhotosPicker
   - Insert image → chip appears, markdown line appended, rendered view shows image
   - Delete chip → ref removed from body, image vanishes
   - Oversized image rejected with banner (cannot easily simulate in simulator)
-- [ ] Stop. No push.
+- [x] Stop. No push.
 
 ## Definition of Done (M4)
 
-- [ ] Picker + compressor + inline render all working
-- [ ] Cascade delete verified
-- [ ] No push, no PR
+- [x] Picker + compressor + inline render all working (verified via unit tests across Tasks 2-5)
+- [x] Cascade delete verified (`AttachmentModelTests.test_deletingNote_cascadesAttachments`)
+- [x] No push, no PR
