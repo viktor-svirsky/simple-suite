@@ -1,6 +1,14 @@
 import Foundation
 import SwiftUI
 
+struct AttachmentReference: Equatable {
+    enum Kind { case image, file }
+    let idString: String
+    let range: Range<String.Index>
+    let caption: String
+    let kind: Kind
+}
+
 enum MarkdownRenderer {
     static func render(_ markdown: String) -> AttributedString {
         let options = AttributedString.MarkdownParsingOptions(
@@ -31,6 +39,20 @@ enum MarkdownRenderer {
         }
 
         return attributed
+    }
+
+    private static let attachmentPattern = /(!?)\[([^\]]*)\]\(attachment:\/\/([^\)]+)\)/
+
+    static func attachmentReferences(in body: String) -> [AttachmentReference] {
+        body.matches(of: attachmentPattern).map { match in
+            let isImage = match.output.1 == "!"
+            return AttachmentReference(
+                idString: String(match.output.3),
+                range: match.range,
+                caption: String(match.output.2),
+                kind: isImage ? .image : .file
+            )
+        }
     }
 }
 

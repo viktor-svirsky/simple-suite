@@ -38,9 +38,13 @@ struct NoteEditorView: View {
                             autosaver.scheduleTouch(on: note)
                         }
                 } else {
-                    NoteMarkdownView(markdown: note.body) {
-                        beginEditing()
-                    }
+                    NoteMarkdownView(
+                        markdown: note.body,
+                        attachmentLookup: { id in
+                            note.attachments.first { $0.id.uuidString == id }
+                        },
+                        onTapToEdit: { beginEditing() }
+                    )
                 }
             }
         }

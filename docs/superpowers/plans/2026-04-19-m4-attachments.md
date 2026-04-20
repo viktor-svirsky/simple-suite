@@ -611,7 +611,7 @@ git commit -m "feat(simple-notes): fileImporter for PDFs and arbitrary files"
 
 Image refs (`![…](attachment://…)`) render inline as `Image(uiImage:)`. PDF refs (`[…](attachment://…)` where mime is PDF) render a first-page thumbnail via PDFKit plus a tappable chip that opens QuickLook. Other file refs render as a plain chip (filename + size + file-type icon).
 
-- [ ] **Step 1: Failing test (parser level)**
+- [x] **Step 1: Failing test (parser level)**
 
 ```swift
 import XCTest
@@ -627,7 +627,7 @@ final class AttachmentRenderingTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Implement parser API**
+- [x] **Step 2: Implement parser API**
 
 Extend `MarkdownRenderer` with a dual-scheme regex: image refs have a leading `!`, file refs don't. Both produce `AttachmentReference` entries and the `kind` distinguishes them so the view can choose inline-image vs chip.
 
@@ -667,13 +667,13 @@ extension MarkdownRenderer {
 }
 ```
 
-- [ ] **Step 3: Rendered view resolves images**
+- [x] **Step 3: Rendered view resolves images**
 
 In `NoteMarkdownView`, instead of rendering a single `Text(attributed)`, walk the body, splitting on `attachmentReferences`. For each reference, look up the `Attachment` by UUID in a passed-in lookup closure and render an `Image(uiImage:)`; render plain markdown fragments between references via the existing `MarkdownRenderer`.
 
 `NoteEditorView` passes a lookup closure `{ id in note.attachments.first { $0.id == id } }`.
 
-- [ ] **Step 4: Tests + manual smoke**
+- [x] **Step 4: Tests + manual smoke**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -681,7 +681,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Markdown \
