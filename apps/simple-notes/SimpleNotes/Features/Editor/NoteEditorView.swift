@@ -210,6 +210,11 @@ struct NoteEditorView: View {
         do {
             let needsRelease = url.startAccessingSecurityScopedResource()
             defer { if needsRelease { url.stopAccessingSecurityScopedResource() } }
+            let values = try url.resourceValues(forKeys: [.fileSizeKey])
+            if let size = values.fileSize, size > AttachmentImporter.maxBytes {
+                showBanner("File too large (10 MB limit).")
+                return
+            }
             let data = try Data(contentsOf: url)
             let filename = url.lastPathComponent
             let mime = AttachmentImporter.mimeType(forFilename: filename)

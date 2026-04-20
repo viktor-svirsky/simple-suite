@@ -205,7 +205,7 @@ git commit -m "fix(simple-notes): parameterize ipa config; build both Release IP
 **Files:**
 - Modify: `apps/simple-notes/SimpleNotes/Features/Editor/NoteEditorView.swift`
 
-- [ ] **Step 1: Guard in `handleFileImport`**
+- [x] **Step 1: Guard in `handleFileImport`**
 
 ```swift
     let values = try url.resourceValues(forKeys: [.fileSizeKey])
@@ -217,7 +217,7 @@ git commit -m "fix(simple-notes): parameterize ipa config; build both Release IP
 
 Runs before `Data(contentsOf: url)`.
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Features/Editor/NoteEditorView.swift \
