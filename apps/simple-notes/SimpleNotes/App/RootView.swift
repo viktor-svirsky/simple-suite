@@ -4,12 +4,13 @@ import SwiftData
 struct RootView: View {
     @State private var scope: NoteListScope = .all
     @State private var selection: UUID?
+    @State private var scrollTarget: UUID?
 
     var body: some View {
         NavigationSplitView {
-            SidebarView(selectedScope: $scope)
+            SidebarView(selectedScope: $scope, scrollTarget: $scrollTarget)
         } content: {
-            NoteListView(scope: scope, selection: $selection)
+            NoteListView(scope: scope, selection: $selection, scrollTarget: $scrollTarget)
                 .id(scope)
         } detail: {
             Group {

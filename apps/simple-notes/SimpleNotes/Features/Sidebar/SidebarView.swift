@@ -3,6 +3,7 @@ import SwiftData
 
 struct SidebarView: View {
     @Binding var selectedScope: NoteListScope
+    @Binding var scrollTarget: UUID?
 
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Note.updatedAt, order: .reverse) private var allNotes: [Note]
@@ -92,8 +93,10 @@ struct SidebarView: View {
     }
 
     private func folderRow(_ folder: Folder) -> some View {
-        let scope = NoteListScope.folder(id: folder.id, name: folder.name)
-        return NavigationLink(value: scope) {
+        Button {
+            if selectedScope != .all { selectedScope = .all }
+            scrollTarget = folder.id
+        } label: {
             HStack {
                 Label(folder.name, systemImage: "folder")
                     .font(Theme.Font.sans(16))
@@ -102,7 +105,9 @@ struct SidebarView: View {
                     .font(Theme.Font.mono(12))
                     .foregroundStyle(Theme.Color.muted)
             }
+            .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 deleteFolder(folder)
@@ -149,7 +154,7 @@ struct SidebarView: View {
 
 #Preview {
     NavigationStack {
-        SidebarView(selectedScope: .constant(.all))
+        SidebarView(selectedScope: .constant(.all), scrollTarget: .constant(nil))
     }
     .modelContainer(for: [Note.self, Folder.self, Tag.self], inMemory: true)
 }
