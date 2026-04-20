@@ -9,6 +9,7 @@ final class NoteListActionsTests: XCTestCase {
         return ModelContext(container)
     }
 
+    @MainActor
     func test_togglePin_flipsIsPinnedAndTouches() throws {
         let ctx = try makeContext()
         let n = Note(body: "x", createdAt: Date(timeIntervalSince1970: 0))
@@ -23,6 +24,7 @@ final class NoteListActionsTests: XCTestCase {
         XCTAssertGreaterThan(n.updatedAt, before)
     }
 
+    @MainActor
     func test_delete_removesFromContext() throws {
         let ctx = try makeContext()
         let n = Note(body: "x")
