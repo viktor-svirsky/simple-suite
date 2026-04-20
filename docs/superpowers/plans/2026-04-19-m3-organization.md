@@ -731,7 +731,7 @@ git commit -m "feat(simple-notes): sidebar folders/tags + searchable list"
 
 ## Task 8: End-to-end verification
 
-- [ ] **Step 1: Full test run**
+- [x] **Step 1: Full test run** — 49 test cases passed, `** TEST SUCCEEDED **`
 
 ```bash
 cd /Users/viktorsvirskyi/Projects/simple-suite
@@ -740,14 +740,14 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes clean test 2>&1 | tail -20
 ```
 
-- [ ] **Step 2: Manual smoke (mark [x] with skip note)**
+- [x] **Step 2: Manual smoke (skipped — not automatable)**
 
 - Create folder in sidebar, drag note into folder (long-press context menu), folder filters
 - Type `#foo` in body, save → sidebar Tags section shows `#foo`
 - Use `.searchable` with `folder:x #y z` → combined filter
 - Swipe folder → delete → notes remain (with `folder = nil`)
 
-- [ ] **Step 3: Stop**
+- [x] **Step 3: Stop**
 
 Do not push.
 
@@ -755,8 +755,8 @@ Do not push.
 
 ## Definition of Done (M3)
 
-- [ ] All unit tests pass
-- [ ] Sidebar Folders + Tags sections render real data
-- [ ] Search bar accepts `#tag`, `folder:x`, and free text
-- [ ] Editor auto-extracts tags on save
-- [ ] No push, no PR
+- [x] All unit tests pass
+- [x] Sidebar Folders + Tags sections render real data
+- [x] Search bar accepts `#tag`, `folder:x`, and free text
+- [x] Editor auto-extracts tags on save
+- [x] No push, no PR
