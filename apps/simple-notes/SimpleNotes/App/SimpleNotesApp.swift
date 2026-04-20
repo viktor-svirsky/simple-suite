@@ -3,6 +3,14 @@ import SwiftData
 
 @main
 struct SimpleNotesApp: App {
+    let container: ModelContainer = {
+        do {
+            return try ModelContainerFactory.make()
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+    }()
+
     init() {
         SentryConfig.start(
             environment: SentryConfig.environment,
@@ -14,6 +22,6 @@ struct SimpleNotesApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [Note.self, Folder.self, Tag.self, Attachment.self])
+        .modelContainer(container)
     }
 }
