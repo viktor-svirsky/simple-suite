@@ -1,6 +1,6 @@
 import Foundation
 
-enum AttachmentError: Error {
+enum AttachmentError: Error, Equatable {
     case encodingFailed
     case tooLarge
 }

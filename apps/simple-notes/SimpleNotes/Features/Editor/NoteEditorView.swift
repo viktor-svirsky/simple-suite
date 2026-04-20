@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
+import UniformTypeIdentifiers
 
 struct NoteEditorView: View {
     @Bindable var note: Note
@@ -11,6 +12,7 @@ struct NoteEditorView: View {
     @FocusState private var isFocused: Bool
     @State private var showCheatsheet = false
     @State private var pickerItem: PhotosPickerItem?
+    @State private var showFileImporter = false
     @State private var errorBanner: String?
 
     var body: some View {
@@ -70,6 +72,12 @@ struct NoteEditorView: View {
                 .accessibilityLabel("Insert image")
             }
             ToolbarItem(placement: .topBarTrailing) {
+                Button { showFileImporter = true } label: {
+                    Image(systemName: "doc.badge.plus")
+                }
+                .accessibilityLabel("Attach file")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     note.isPinned.toggle()
                     note.touch()
@@ -105,6 +113,13 @@ struct NoteEditorView: View {
         }
         .onChange(of: pickerItem) { _, newItem in
             Task { await handlePickedImage(newItem) }
+        }
+        .fileImporter(
+            isPresented: $showFileImporter,
+            allowedContentTypes: [.pdf, .data, .content, .item],
+            allowsMultipleSelection: false
+        ) { result in
+            handleFileImport(result)
         }
     }
 
@@ -147,6 +162,33 @@ struct NoteEditorView: View {
             showBanner("Image too large after compression (5 MB limit).")
         } catch {
             showBanner("Couldn't attach image.")
+        }
+    }
+
+    private func handleFileImport(_ result: Result<[URL], Error>) {
+        guard case .success(let urls) = result, let url = urls.first else { return }
+        do {
+            let needsRelease = url.startAccessingSecurityScopedResource()
+            defer { if needsRelease { url.stopAccessingSecurityScopedResource() } }
+            let data = try Data(contentsOf: url)
+            let filename = url.lastPathComponent
+            let mime = AttachmentImporter.mimeType(forFilename: filename)
+            let att = try AttachmentImporter.makeAttachment(
+                filename: filename,
+                data: data,
+                mimeType: mime
+            )
+            modelContext.insert(att)
+            note.attachments.append(att)
+            let bang = mime.hasPrefix("image/") ? "!" : ""
+            let separator = note.body.isEmpty ? "" : "\n\n"
+            note.body.append("\(separator)\(bang)[\(filename)](attachment://\(att.id.uuidString))\n")
+            note.touch()
+            try? modelContext.save()
+        } catch AttachmentError.tooLarge {
+            showBanner("File too large (10 MB limit).")
+        } catch {
+            showBanner("Couldn't attach file.")
         }
     }
 

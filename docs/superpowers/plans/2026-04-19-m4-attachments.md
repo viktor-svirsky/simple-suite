@@ -445,7 +445,7 @@ git commit -m "feat(simple-notes): photos picker + attachment chip row"
 
 Adds a second toolbar entry: a `doc.badge.plus` button that triggers `.fileImporter` and imports arbitrary files (including PDFs) under a 10 MB limit.
 
-- [ ] **Step 1: Tests for importer limits**
+- [x] **Step 1: Tests for importer limits**
 
 `apps/simple-notes/SimpleNotesTests/AttachmentImporterTests.swift`:
 
@@ -484,7 +484,7 @@ final class AttachmentImporterTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Implement importer**
+- [x] **Step 2: Implement importer**
 
 `apps/simple-notes/SimpleNotes/Attachments/AttachmentImporter.swift`:
 
@@ -519,7 +519,7 @@ enum AttachmentImporter {
 }
 ```
 
-- [ ] **Step 3: Wire `.fileImporter` in editor**
+- [x] **Step 3: Wire `.fileImporter` in editor**
 
 In `NoteEditorView`:
 
@@ -581,7 +581,7 @@ Handler:
     }
 ```
 
-- [ ] **Step 4: Regen + tests pass**
+- [x] **Step 4: Regen + tests pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -589,7 +589,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Attachments/AttachmentImporter.swift \
