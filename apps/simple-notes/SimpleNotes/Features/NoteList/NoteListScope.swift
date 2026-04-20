@@ -10,14 +10,27 @@ extension Bool: @retroactive Comparable {
     }
 }
 
-enum NoteListScope: String, CaseIterable, Identifiable {
-    case all, pinned
-    var id: String { rawValue }
+enum NoteListScope: Hashable, Identifiable {
+    case all
+    case pinned
+    case folder(id: UUID, name: String)
+    case tag(id: UUID, name: String)
+
+    var id: String {
+        switch self {
+        case .all: return "all"
+        case .pinned: return "pinned"
+        case .folder(let id, _): return "folder:\(id)"
+        case .tag(let id, _): return "tag:\(id)"
+        }
+    }
 
     var title: String {
         switch self {
         case .all: return "All Notes"
         case .pinned: return "Pinned"
+        case .folder(_, let name): return name
+        case .tag(_, let name): return "#\(name)"
         }
     }
 
@@ -27,6 +40,8 @@ enum NoteListScope: String, CaseIterable, Identifiable {
         switch self {
         case .all: return true
         case .pinned: return note.isPinned
+        case .folder(let id, _): return note.folder?.id == id
+        case .tag(let id, _): return note.tags.contains { $0.id == id }
         }
     }
 
@@ -36,6 +51,12 @@ enum NoteListScope: String, CaseIterable, Identifiable {
             return #Predicate<Note> { _ in true }
         case .pinned:
             return #Predicate<Note> { $0.isPinned }
+        case .folder(let id, _):
+            return #Predicate<Note> { $0.folder?.id == id }
+        case .tag(let id, _):
+            return #Predicate<Note> { note in
+                note.tags.contains { $0.id == id }
+            }
         }
     }
 

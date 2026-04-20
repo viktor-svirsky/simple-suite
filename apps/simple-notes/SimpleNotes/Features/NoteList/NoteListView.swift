@@ -7,6 +7,7 @@ struct NoteListView: View {
 
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
+    @State private var searchText: String = ""
 
     init(scope: NoteListScope, selection: Binding<UUID?>) {
         self.scope = scope
@@ -17,17 +18,31 @@ struct NoteListView: View {
         )
     }
 
+    private var parsedQuery: SearchQuery {
+        SearchQueryParser.parse(searchText)
+    }
+
+    private var filteredNotes: [Note] {
+        let q = parsedQuery
+        guard !q.isEmpty else { return notes }
+        return notes.filter { NoteSearch.matches(query: q, note: $0) }
+    }
+
     var body: some View {
         Group {
-            if notes.isEmpty {
+            if filteredNotes.isEmpty {
                 ContentUnavailableView(
-                    "No notes yet",
-                    systemImage: "square.and.pencil",
-                    description: Text("Tap + to create one.")
+                    parsedQuery.isEmpty ? "No notes yet" : "No matches",
+                    systemImage: parsedQuery.isEmpty ? "square.and.pencil" : "magnifyingglass",
+                    description: Text(
+                        parsedQuery.isEmpty
+                            ? "Tap + to create one."
+                            : "Try a different search."
+                    )
                 )
             } else {
                 List(selection: $selection) {
-                    ForEach(notes) { note in
+                    ForEach(filteredNotes) { note in
                         NavigationLink(value: note.id) {
                             NoteListRow(
                                 title: note.title,
@@ -61,6 +76,7 @@ struct NoteListView: View {
                 .listStyle(.plain)
             }
         }
+        .searchable(text: $searchText, prompt: "Search #tag folder:name text")
         .navigationTitle(scope.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -75,6 +91,12 @@ struct NoteListView: View {
 
     private func createNote() {
         let note = Note()
+        if case .folder(let id, _) = scope,
+           let folder = try? modelContext.fetch(
+               FetchDescriptor<Folder>(predicate: #Predicate { $0.id == id })
+           ).first {
+            note.folder = folder
+        }
         modelContext.insert(note)
         selection = note.id
     }
@@ -84,5 +106,5 @@ struct NoteListView: View {
     NavigationStack {
         NoteListView(scope: .all, selection: .constant(nil))
     }
-    .modelContainer(for: [Note.self], inMemory: true)
+    .modelContainer(for: [Note.self, Folder.self, Tag.self], inMemory: true)
 }

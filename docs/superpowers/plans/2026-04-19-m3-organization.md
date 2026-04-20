@@ -665,13 +665,13 @@ git commit -m "feat(simple-notes): SearchQuery-driven FetchDescriptor"
 - Modify: `apps/simple-notes/SimpleNotes/Features/Sidebar/SidebarView.swift`
 - Modify: `apps/simple-notes/SimpleNotes/App/RootView.swift`
 
-- [ ] **Step 1: Search in `NoteListView`**
+- [x] **Step 1: Search in `NoteListView`**
 
 Add `.searchable(text: $searchText)` bound to a `@State` string; on change, call `SearchQueryParser.parse` and rebuild the fetch descriptor (recreate the view with the new predicate via `@State` query key).
 
 Use `@Environment(\.modelContext)` + a manually fetched `@State var notes: [Note]` that refreshes on `.onChange(of: searchText)`. (`@Query` doesn't take a dynamic predicate, so swap to imperative fetch here.)
 
-- [ ] **Step 2: Sidebar folders section**
+- [x] **Step 2: Sidebar folders section**
 
 Inside `SidebarView`:
 
@@ -692,7 +692,7 @@ Inside `SidebarView`:
 
 `folders` from `@Query(sort: \Folder.sortOrder)`. Add swipe-to-delete on the folder rows.
 
-- [ ] **Step 3: Sidebar tags section**
+- [x] **Step 3: Sidebar tags section**
 
 ```swift
             if !tags.isEmpty {
@@ -706,11 +706,11 @@ Inside `SidebarView`:
 
 Extend `NoteListScope` with `.folder(UUID)` and `.tag(UUID)` cases.
 
-- [ ] **Step 4: `RootView` passes folder / tag filter down**
+- [x] **Step 4: `RootView` passes folder / tag filter down**
 
 Translate the scope into a `SearchQuery` pre-populated with `folderName` or `tags[0]` before reaching the list, OR route all filtering through `NoteSearch.descriptor`.
 
-- [ ] **Step 5: Tests + build pass**
+- [x] **Step 5: Tests + build pass**
 
 ```bash
 (cd apps/simple-notes && xcodegen generate)
@@ -718,7 +718,7 @@ DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
   make -C apps/simple-notes test 2>&1 | tail -10
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add apps/simple-notes/SimpleNotes/Features \
