@@ -108,14 +108,26 @@ jobs:
         working-directory: ${{ env.APP_DIR }}
         run: make test VERSION=${{ env.VERSION }}
 
-      - name: Build IPA
+      - name: Build IPA (AltStore — Release, no iCloud)
         if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
         working-directory: ${{ env.APP_DIR }}
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          make ipa VERSION=${{ env.VERSION }} SENTRY_DSN="$SENTRY_DSN"
+          make ipa CONFIG=Release VERSION=${{ env.VERSION }} SENTRY_DSN="$SENTRY_DSN"
           cp /tmp/SimpleNotes.ipa "$GITHUB_WORKSPACE/SimpleNotes.ipa"
+
+      # Separate artifact for users who want iCloud sync. Must be signed with a
+      # team that has the CloudKit container provisioned — the ad-hoc signed
+      # build here is intended for internal/TestFlight paths, not AltStore.
+      - name: Build IPA (CloudKit)
+        if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          make ipa CONFIG=ReleaseCloudKit VERSION=${{ env.VERSION }} SENTRY_DSN="$SENTRY_DSN"
+          cp /tmp/SimpleNotesCloudKit.ipa "$GITHUB_WORKSPACE/SimpleNotesCloudKit.ipa"
 
       - name: Create tag
         if: steps.version.outputs.bump != 'none' && env.SKIP_RELEASE != 'true'
@@ -129,7 +141,9 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: simple-notes ${{ env.TAG }}
-          files: SimpleNotes.ipa
+          files: |
+            SimpleNotes.ipa
+            SimpleNotesCloudKit.ipa
           generate_release_notes: true
 
       # Re-verify the published artifact by downloading it and checking the zip
@@ -156,7 +170,8 @@ jobs:
           sentry-cli releases set-commits --auto "$RELEASE" || true
           sentry-cli debug-files upload \
             --include-sources \
-            /tmp/SimpleNotes.xcarchive/dSYMs || true
+            /tmp/SimpleNotes.xcarchive/dSYMs \
+            /tmp/SimpleNotesCloudKit.xcarchive/dSYMs || true
           sentry-cli releases finalize "$RELEASE"
 
       - name: Verify published bundle
@@ -166,7 +181,9 @@ jobs:
         run: |
           mkdir -p /tmp/release-verify
           gh release download "${{ env.TAG }}" -D /tmp/release-verify -p SimpleNotes.ipa --clobber
+          gh release download "${{ env.TAG }}" -D /tmp/release-verify -p SimpleNotesCloudKit.ipa --clobber
           unzip -t /tmp/release-verify/SimpleNotes.ipa > /dev/null
+          unzip -t /tmp/release-verify/SimpleNotesCloudKit.ipa > /dev/null
 
       # Private repo on the free plan has no branch protection, so push the
       # VERSION/altstore bump straight to main instead of opening a PR (which

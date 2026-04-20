@@ -162,7 +162,7 @@ git commit -m "fix(simple-notes): per-config entitlements (Release has no iCloud
 - Modify: `apps/simple-notes/Makefile`
 - Modify: `.github/workflows/release.yml`
 
-- [ ] **Step 1: Makefile**
+- [x] **Step 1: Makefile**
 
 ```make
 CONFIG ?= Release
@@ -185,11 +185,11 @@ ipa: generate
 	cd /tmp/$(APP_NAME)IPA && zip -r /tmp/$(APP_NAME).ipa Payload/
 ```
 
-- [ ] **Step 2: release.yml — build both IPAs**
+- [x] **Step 2: release.yml — build both IPAs**
 
 Add a second build step for ReleaseCloudKit that produces `SimpleNotesCloudKit.ipa`. Keep the existing step for `SimpleNotes.ipa` (AltStore). Upload both to the GitHub Release. altstore-source.json keeps pointing at `SimpleNotes.ipa`.
 
-- [ ] **Step 3: actionlint pass + commit**
+- [x] **Step 3: actionlint pass + commit**
 
 ```bash
 actionlint .github/workflows/*.yml
