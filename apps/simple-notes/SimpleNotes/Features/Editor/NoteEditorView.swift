@@ -192,12 +192,7 @@ struct NoteEditorView: View {
             let compressed = try AttachmentCompressor.compress(image)
             let filename = "image-\(UUID().uuidString.prefix(6)).jpg"
             let att = Attachment(filename: filename, mimeType: "image/jpeg", data: compressed)
-            modelContext.insert(att)
-            note.attachments.append(att)
-            let separator = note.body.isEmpty ? "" : "\n\n"
-            note.body.append("\(separator)![\(filename)](attachment://\(att.id.uuidString))\n")
-            note.touch()
-            try? modelContext.save()
+            NoteAttachments.attach(att, to: note, context: modelContext, isImage: true)
         } catch AttachmentError.tooLarge {
             showBanner("Image too large after compression (5 MB limit).")
         } catch {
@@ -223,13 +218,7 @@ struct NoteEditorView: View {
                 data: data,
                 mimeType: mime
             )
-            modelContext.insert(att)
-            note.attachments.append(att)
-            let bang = mime.hasPrefix("image/") ? "!" : ""
-            let separator = note.body.isEmpty ? "" : "\n\n"
-            note.body.append("\(separator)\(bang)[\(filename)](attachment://\(att.id.uuidString))\n")
-            note.touch()
-            try? modelContext.save()
+            NoteAttachments.attach(att, to: note, context: modelContext, isImage: mime.hasPrefix("image/"))
         } catch AttachmentError.tooLarge {
             showBanner("File too large (10 MB limit).")
         } catch {
@@ -238,22 +227,7 @@ struct NoteEditorView: View {
     }
 
     private func deleteAttachment(_ att: Attachment) {
-        let idString = att.id.uuidString
-        let patterns = [
-            "\n\n![\(att.filename)](attachment://\(idString))\n",
-            "![\(att.filename)](attachment://\(idString))",
-            "\n\n[\(att.filename)](attachment://\(idString))\n",
-            "[\(att.filename)](attachment://\(idString))"
-        ]
-        for p in patterns {
-            note.body = note.body.replacingOccurrences(of: p, with: "")
-        }
-        if let idx = note.attachments.firstIndex(where: { $0.id == att.id }) {
-            note.attachments.remove(at: idx)
-        }
-        modelContext.delete(att)
-        note.touch()
-        try? modelContext.save()
+        NoteAttachments.detach(att, from: note, context: modelContext)
     }
 
     private func showBanner(_ message: String) {

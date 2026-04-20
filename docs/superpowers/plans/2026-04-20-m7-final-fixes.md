@@ -233,7 +233,7 @@ git commit -m "fix(simple-notes): pre-check file size before loading into memory
 - Create: `apps/simple-notes/SimpleNotes/Attachments/NoteAttachments.swift`
 - Modify: `apps/simple-notes/SimpleNotes/Features/Editor/NoteEditorView.swift`
 
-- [ ] **Step 1: Helper**
+- [x] **Step 1: Helper**
 
 ```swift
 enum NoteAttachments {
@@ -264,11 +264,11 @@ enum NoteAttachments {
 }
 ```
 
-- [ ] **Step 2: Swap call sites**
+- [x] **Step 2: Swap call sites**
 
 In `handlePickedImage` and `handleFileImport`, replace the ~10-line attach sequence with a single `NoteAttachments.attach(att, to: note, context: modelContext, isImage: isImage)`. Replace `deleteAttachment` body with `NoteAttachments.detach(...)`.
 
-- [ ] **Step 3: Tests + commit**
+- [x] **Step 3: Tests + commit**
 
 ```bash
 DEST_TEST='platform=iOS Simulator,name=iPhone 17' \
