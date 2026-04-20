@@ -14,6 +14,7 @@ struct SidebarView: View {
 
     @State private var renameTarget: Folder?
     @State private var renameText: String = ""
+    @State private var showSettings: Bool = false
 
     private var pinnedCount: Int { allNotes.filter(\.isPinned).count }
 
@@ -65,8 +66,24 @@ struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("simple notes")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showSettings = true
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .accessibilityLabel("Settings")
+            }
+        }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             syncFooter
+        }
+        .sheet(isPresented: $showSettings) {
+            NavigationStack {
+                SettingsView()
+            }
+            .environment(\.syncStatus, syncStatus)
         }
         .alert("Rename folder", isPresented: renameBinding) {
             TextField("Name", text: $renameText)
