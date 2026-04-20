@@ -18,6 +18,13 @@
       },
       "versions": [
         {
+          "version": "0.6.0",
+          "date": "2026-04-20",
+          "downloadURL": "https://github.com/viktor-svirsky/simple-suite/releases/download/simple-notes-v0.6.0/SimpleNotes.ipa",
+          "size": 1028132,
+          "localizedDescription": "Update to v0.6.0"
+        },
+        {
           "version": "0.5.0",
           "date": "2026-04-20",
           "downloadURL": "https://github.com/viktor-svirsky/simple-suite/releases/download/simple-notes-v0.5.0/SimpleNotes.ipa",
@@ -44,13 +51,6 @@
           "downloadURL": "https://github.com/viktor-svirsky/simple-suite/releases/download/simple-notes-v0.2.0/SimpleNotes.ipa",
           "size": 914653,
           "localizedDescription": "Update to v0.2.0"
-        },
-        {
-          "version": "0.1.1",
-          "date": "2026-04-19",
-          "downloadURL": "https://github.com/viktor-svirsky/simple-suite/releases/download/simple-notes-v0.1.1/SimpleNotes.ipa",
-          "size": 898237,
-          "localizedDescription": "Update to v0.1.1"
         }
       ]
     }
