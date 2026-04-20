@@ -5,6 +5,10 @@ options:
     iOS: "17.0"
   createIntermediateGroups: true
   generateEmptyDirectories: true
+configs:
+  Debug: debug
+  Release: release
+  ReleaseCloudKit: release
 packages:
   Sentry:
     url: https://github.com/getsentry/sentry-cocoa
@@ -49,6 +53,10 @@ targets:
         SUPPORTS_MACCATALYST: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_ENTITLEMENTS: SimpleNotes/Resources/SimpleNotes.entitlements
+      configs:
+        ReleaseCloudKit:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) SIMPLE_NOTES_CLOUDKIT_ENABLED
   SimpleNotesTests:
     type: bundle.unit-test
     platform: iOS
