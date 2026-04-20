@@ -336,17 +336,17 @@ git commit -m "chore(simple-notes): lower Sentry tracesSampleRate to 0.01"
 
 ## Task 9: E2E + stop
 
-- [ ] Full `make clean test`.
-- [ ] Both configs build (Release + ReleaseCloudKit).
-- [ ] No push.
+- [x] Full `make clean test`.
+- [x] Both configs build (Release + ReleaseCloudKit).
+- [x] No push.
 
 ## Definition of Done (M7)
 
-- [ ] Attachment inverse + externalStorage wired
-- [ ] Per-config entitlements
-- [ ] Both IPAs build in CI
-- [ ] File size pre-check
-- [ ] Attachment helper extracted
-- [ ] Release pipeline rolls back on verification failure
-- [ ] Sentry sample rate lowered
-- [ ] No push, no PR
+- [x] Attachment inverse + externalStorage wired
+- [x] Per-config entitlements
+- [x] Both IPAs build in CI
+- [x] File size pre-check
+- [x] Attachment helper extracted
+- [x] Release pipeline rolls back on verification failure
+- [x] Sentry sample rate lowered
+- [x] No push, no PR
