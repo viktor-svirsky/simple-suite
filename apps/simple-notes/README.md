@@ -2,6 +2,12 @@
 
 Minimal markdown notes app — first in the `simple-suite`.
 
+## Screenshots
+
+| List | Editor | Sidebar |
+|------|--------|---------|
+| ![](../../docs/screenshots/list.png) | ![](../../docs/screenshots/editor.png) | ![](../../docs/screenshots/sidebar.png) |
+
 ## Requirements
 
 - Xcode 15.4+
