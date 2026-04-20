@@ -41,17 +41,29 @@ struct NoteListView: View {
         NoteListGrouping.group(filteredNotes)
     }
 
+    private var emptyState: (title: String, systemImage: String, description: String) {
+        if !parsedQuery.isEmpty {
+            return ("No matches", "magnifyingglass", "No notes match \u{201C}\(searchText)\u{201D}.")
+        }
+        switch scope {
+        case .all:
+            return ("No notes yet", "square.and.pencil", "Tap + to create one.")
+        case .pinned:
+            return ("Nothing pinned", "pin", "Swipe a note to pin it.")
+        case .folder:
+            return ("Empty folder", "folder", "Tap + to add a note here.")
+        case .tag:
+            return ("No notes with this tag", "tag", "Tag a note to see it here.")
+        }
+    }
+
     var body: some View {
         Group {
             if sections.isEmpty {
                 ContentUnavailableView(
-                    parsedQuery.isEmpty ? "No notes yet" : "No matches",
-                    systemImage: parsedQuery.isEmpty ? "square.and.pencil" : "magnifyingglass",
-                    description: Text(
-                        parsedQuery.isEmpty
-                            ? "Tap + to create one."
-                            : "Try a different search."
-                    )
+                    emptyState.title,
+                    systemImage: emptyState.systemImage,
+                    description: Text(emptyState.description)
                 )
             } else {
                 ScrollViewReader { proxy in
