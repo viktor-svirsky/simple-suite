@@ -6,6 +6,7 @@ struct SidebarView: View {
     @Binding var scrollTarget: UUID?
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.syncStatus) private var syncStatus
     @Query(sort: \Note.updatedAt, order: .reverse) private var allNotes: [Note]
     @Query(sort: [SortDescriptor(\Folder.sortOrder), SortDescriptor(\Folder.name)])
     private var folders: [Folder]
@@ -64,6 +65,9 @@ struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("simple notes")
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            syncFooter
+        }
         .alert("Rename folder", isPresented: renameBinding) {
             TextField("Name", text: $renameText)
             Button("Cancel", role: .cancel) {
@@ -135,6 +139,46 @@ struct SidebarView: View {
                     .font(Theme.Font.mono(12))
                     .foregroundStyle(Theme.Color.muted)
             }
+        }
+    }
+
+    private var syncFooter: some View {
+        HStack(spacing: 8) {
+            Circle()
+                .fill(syncDotColor)
+                .frame(width: 8, height: 8)
+            Text(syncText)
+                .font(Theme.Font.sans(12))
+                .foregroundStyle(Theme.Color.muted)
+            Spacer()
+        }
+        .padding(.horizontal, Theme.Metric.padding)
+        .padding(.vertical, 10)
+        .background(Theme.Color.surface)
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Theme.Color.hairline)
+                .frame(height: Theme.Metric.hairline)
+        }
+    }
+
+    private var syncText: String {
+        switch syncStatus.state {
+        case .disabled: return "Sync disabled"
+        case .offline: return "Offline"
+        case .syncing: return "Syncing…"
+        case .synced(let date):
+            let formatter = RelativeDateTimeFormatter()
+            return "Synced " + formatter.localizedString(for: date, relativeTo: Date())
+        }
+    }
+
+    private var syncDotColor: SwiftUI.Color {
+        switch syncStatus.state {
+        case .disabled: return Theme.Color.muted
+        case .offline: return .orange
+        case .syncing: return .yellow
+        case .synced: return .green
         }
     }
 

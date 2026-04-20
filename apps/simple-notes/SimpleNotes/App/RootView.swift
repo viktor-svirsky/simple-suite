@@ -5,6 +5,8 @@ struct RootView: View {
     @State private var scope: NoteListScope = .all
     @State private var selection: UUID?
     @State private var scrollTarget: UUID?
+    @State private var syncStatus: SyncStatus = .initial
+    @State private var syncObserver: SyncObserver?
 
     var body: some View {
         NavigationSplitView {
@@ -24,6 +26,14 @@ struct RootView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .tint(Theme.Color.accent)
+        .environment(\.syncStatus, syncStatus)
+        .onAppear {
+            if syncObserver == nil {
+                let observer = SyncObserver(status: syncStatus)
+                observer.start()
+                syncObserver = observer
+            }
+        }
     }
 
     @Environment(\.modelContext) private var modelContext
