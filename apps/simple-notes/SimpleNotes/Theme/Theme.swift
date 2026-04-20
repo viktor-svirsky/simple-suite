@@ -17,13 +17,28 @@ enum Theme {
         static let monoName  = "SF Mono"
 
         static func serif(_ size: CGFloat, weight: SwiftUI.Font.Weight = .regular) -> SwiftUI.Font {
-            .custom(serifName, size: size).weight(weight)
+            .custom(serifName, size: size, relativeTo: textStyle(for: size)).weight(weight)
         }
         static func sans(_ size: CGFloat, weight: SwiftUI.Font.Weight = .regular) -> SwiftUI.Font {
-            .system(size: size, weight: weight, design: .default)
+            .system(textStyle(for: size), design: .default, weight: weight)
         }
         static func mono(_ size: CGFloat) -> SwiftUI.Font {
-            .system(size: size, design: .monospaced)
+            .system(textStyle(for: size), design: .monospaced)
+        }
+
+        static func textStyle(for size: CGFloat) -> SwiftUI.Font.TextStyle {
+            switch size {
+            case ..<12:  return .caption2
+            case ..<13:  return .caption
+            case ..<14:  return .footnote
+            case ..<16:  return .subheadline
+            case ..<17:  return .callout
+            case ..<20:  return .body
+            case ..<22:  return .title3
+            case ..<28:  return .title2
+            case ..<34:  return .title
+            default:     return .largeTitle
+            }
         }
     }
 

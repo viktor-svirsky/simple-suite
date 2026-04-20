@@ -14,4 +14,14 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(Theme.Font.sansName, "SF Pro Text")
         XCTAssertEqual(Theme.Font.monoName, "SF Mono")
     }
+
+    func test_textStyle_mapsSizesToScalableTextStyles() {
+        XCTAssertEqual(Theme.Font.textStyle(for: 11), .caption2)
+        XCTAssertEqual(Theme.Font.textStyle(for: 12), .caption)
+        XCTAssertEqual(Theme.Font.textStyle(for: 13), .footnote)
+        XCTAssertEqual(Theme.Font.textStyle(for: 14), .subheadline)
+        XCTAssertEqual(Theme.Font.textStyle(for: 15), .subheadline)
+        XCTAssertEqual(Theme.Font.textStyle(for: 16), .callout)
+        XCTAssertEqual(Theme.Font.textStyle(for: 17), .body)
+    }
 }
