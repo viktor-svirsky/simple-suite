@@ -18,7 +18,10 @@ struct RootView: View {
             Group {
                 if let id = selection,
                    let note = fetchNote(id: id) {
-                    NoteEditorView(note: note)
+                    NoteEditorView(note: note, onDelete: {
+                        selection = nil
+                        NoteActions.delete(note, in: modelContext)
+                    })
                 } else {
                     ContentUnavailableView("Select a note", systemImage: "text.alignleft")
                 }

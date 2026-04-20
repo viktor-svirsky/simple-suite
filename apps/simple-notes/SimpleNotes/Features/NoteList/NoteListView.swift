@@ -9,6 +9,7 @@ struct NoteListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
     @State private var searchText: String = ""
+    @FocusState private var isSearchFocused: Bool
 
     private static let inboxAnchorID = UUID(uuidString: "00000000-0000-0000-0000-00000000B0C5")!
 
@@ -71,8 +72,15 @@ struct NoteListView: View {
             }
         }
         .searchable(text: $searchText, prompt: "Search #tag folder:name text")
+        .applySearchFocus($isSearchFocused)
         .navigationTitle(scope.title)
         .navigationBarTitleDisplayMode(.inline)
+        .background(
+            Button("Focus Search") { isSearchFocused = true }
+                .keyboardShortcut("f", modifiers: .command)
+                .frame(width: 0, height: 0)
+                .hidden()
+        )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -80,6 +88,7 @@ struct NoteListView: View {
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
+                .keyboardShortcut("n", modifiers: .command)
                 .accessibilityLabel("New Note")
             }
         }
@@ -165,4 +174,15 @@ struct NoteListView: View {
         NoteListView(scope: .all, selection: .constant(nil))
     }
     .modelContainer(for: [Note.self, Folder.self, Tag.self], inMemory: true)
+}
+
+private extension View {
+    @ViewBuilder
+    func applySearchFocus(_ focused: FocusState<Bool>.Binding) -> some View {
+        if #available(iOS 18.0, *) {
+            searchFocused(focused)
+        } else {
+            self
+        }
+    }
 }

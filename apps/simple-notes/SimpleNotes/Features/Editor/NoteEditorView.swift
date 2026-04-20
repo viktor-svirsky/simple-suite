@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 
 struct NoteEditorView: View {
     @Bindable var note: Note
+    var onDelete: () -> Void = {}
     @Environment(\.modelContext) private var modelContext
 
     @State private var autosaver = EditorAutosaver()
@@ -88,7 +89,37 @@ struct NoteEditorView: View {
                 } label: {
                     Image(systemName: note.isPinned ? "pin.fill" : "pin")
                 }
+                .keyboardShortcut("p", modifiers: [.command, .shift])
                 .accessibilityLabel(note.isPinned ? "Unpin" : "Pin")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        MarkdownFormatting.insert(.bold, into: &note.body)
+                    } label: {
+                        Label("Bold", systemImage: "bold")
+                    }
+                    .keyboardShortcut("b", modifiers: .command)
+
+                    Button {
+                        MarkdownFormatting.insert(.italic, into: &note.body)
+                    } label: {
+                        Label("Italic", systemImage: "italic")
+                    }
+                    .keyboardShortcut("i", modifiers: .command)
+
+                    Divider()
+
+                    Button(role: .destructive) {
+                        deleteNote()
+                    } label: {
+                        Label("Delete Note", systemImage: "trash")
+                    }
+                    .keyboardShortcut(.delete, modifiers: .command)
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+                .accessibilityLabel("More actions")
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -143,6 +174,11 @@ struct NoteEditorView: View {
         note.touch()
         TagExtractor.apply(to: note, in: modelContext)
         try? modelContext.save()
+    }
+
+    private func deleteNote() {
+        autosaver.cancel()
+        onDelete()
     }
 
     private func handlePickedImage(_ item: PhotosPickerItem?) async {
